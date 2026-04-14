@@ -12,9 +12,9 @@ jobs:
       - name: Install PlatformIO
         run: pip install platformio
       - name: Build
-        run: pio run -e esp32s3_devkitc_1
+        run: pio run -e esp32s3-devkitc-1
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: gpio-monitor-bin
-          path: .pio/build/esp32s3_devkitc_1/firmware.bin
+          path: .pio/build/esp32s3-devkitc-1/firmware.bin
