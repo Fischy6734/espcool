@@ -22,9 +22,9 @@ jobs:
       - name: Install PlatformIO
         run: pip install --upgrade platformio
       - name: Run PlatformIO
-        run: platformio run -e esp32-c3-devkitm-1
+        run: platformio run -e ESP32-C3-DevKitM-1
       - name: Upload firmware artifact
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: .pio/build/esp32-c3-devkitm-1/firmware.bin
+          path: .pio/build/ESP32-C3-DevKitM-1/firmware.bin
