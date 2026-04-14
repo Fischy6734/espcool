@@ -6,7 +6,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup PlatformIO
-        uses: platformio/platformio-core-action@v3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - name: Install PlatformIO
+        run: pip install platformio
       - name: Build
         run: pio run -e esp32s3_devkitc_1
       - name: Upload firmware
