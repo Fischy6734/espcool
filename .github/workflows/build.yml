@@ -1,20 +1,30 @@
-name: Build ESP32-S3 Firmware
+name: Build ESP32-C3 Firmware
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup PlatformIO
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+      - name: Cache PlatformIO
+        uses: actions/cache@v3
+        with:
+          path: ~/.platformio
+          key: ${{ runner.os }}-platformio
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
       - name: Install PlatformIO
-        run: pip install platformio
-      - name: Build
-        run: pio run -e esp32s3-devkitc-1
-      - name: Upload firmware
+        run: pip install --upgrade platformio
+      - name: Run PlatformIO
+        run: platformio run -e esp32-c3-devkitm-1
+      - name: Upload firmware artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gpio-monitor-bin
-          path: .pio/build/esp32s3-devkitc-1/firmware.bin
+          name: firmware
+          path: .pio/build/esp32-c3-devkitm-1/firmware.bin
