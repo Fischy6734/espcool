@@ -5,29 +5,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Cache pip
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-      - name: Cache PlatformIO
-        uses: actions/cache@v3
-        with:
-          path: ~/.platformio
-          key: ${{ runner.os }}-platformio
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      
       - name: Install PlatformIO
-        run: pip install --upgrade platformio
-      - name: Run PlatformIO
-        run: platformio run -e ESP32-C3-DevKitM-1
-      - name: Upload firmware artifacts
+        run: |
+          python -m pip install --upgrade pip
+          pip install platformio
+      
+      - name: Build firmware
+        run: platformio run -e ESP32-C3-DevKitM-1 -v
+      
+      - name: Check if build succeeded
+        run: ls -la .pio/build/ESP32-C3-DevKitM-1/
+      
+      - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
-          name: firmware
-          path: |
-            .pio/build/ESP32-C3-DevKitM-1/firmware.bin
-            .pio/build/ESP32-C3-DevKitM-1/bootloader.bin
-            .pio/build/ESP32-C3-DevKitM-1/partitions.bin
+          name: firmware-binary
+          path: .pio/build/ESP32-C3-DevKitM-1/firmware.bin
