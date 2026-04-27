@@ -1,4 +1,4 @@
-name: Build ESP32-C3 Firmware
+name: Build ESP32-S3 Firmware
 on: [push]
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
         run: pip install platformio
       
       - name: Build firmware with PlatformIO
-        run: platformio run -e esp32-c3-devkitm-1
+        run: platformio run -e esp32-s3-devkitm-1
       
       - name: Check build output
         run: find .pio -name "*.bin" -type f
@@ -24,4 +24,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: .pio/build/esp32-c3-devkitm-1/
+          path: .pio/build/esp32-s3-devkitm-1/
