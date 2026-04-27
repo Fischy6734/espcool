@@ -1,5 +1,4 @@
-name: Build M5Stick S3 Firmware
-
+name: esp32-s3-devkitm-1
 on:
   push:
     branches: [ "main" ]
@@ -22,7 +21,7 @@ jobs:
         run: pip install platformio
 
       - name: Build firmware for M5Stick S3
-        run: platformio run -e m5stick-s3  # ← Changed to your new environment
+        run: platformio run -e esp32-s3-devkitm-1  # ← Changed to your new environment
 
       - name: Check build output
         run: find .pio -name "*.bin" -type f
@@ -31,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: .pio/build/m5stack-sticks3/  # ← Match your environment + board folder
+          path: .pio/build/esp32-s3-devkitm-1/  # ← Match your environment + board folder
