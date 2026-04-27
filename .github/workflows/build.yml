@@ -1,25 +1,32 @@
-name: PlatformIO CI (M5 Stick S3)
-
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
+name: Build ESP32-C3 Firmware
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup PlatformIO
-        uses: platformio/platformio-action@v3
-
-      - name: Build for M5 Stick S3
-        uses: platformio/platformio-action@v3
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          project-dir: .
-          environment: m5stick-s3
-          options: -v
+          python-version: '3.11'
+      
+      - name: Install PlatformIO
+        run: pip install platformio
+      
+      - name: Build firmware
+        run: platformio run -e esp32-c3-devkitm-1
+      
+      - name: Create release folder
+        run: |
+          mkdir -p release
+          cp .pio/build/esp32-c3-devkitm-1/bootloader.bin release/
+          cp .pio/build/esp32-c3-devkitm-1/partitions.bin release/
+          cp .pio/build/esp32-c3-devkitm-1/firmware.bin release/
+          ls -la release/
+      
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: ESP32-C3-Firmware
+          path: release/
