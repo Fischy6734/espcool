@@ -5,8 +5,6 @@
 #include <time.h>
 #include <HTTPClient.h>
 
-// Credentials header (placeholders; create include/credentials.h in your repo)
-#include "credentials.h"
 
 // Screen/menu constants
 #define NUM_SCREENS 5
