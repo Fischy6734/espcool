@@ -1,33 +1,25 @@
-name: esp32-s3-devkitm-1
+name: PlatformIO CI (M5 Stick S3)
+
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main, master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Setup PlatformIO
+        uses: platformio/platformio-action@v3
+
+      - name: Build for M5 Stick S3
+        uses: platformio/platformio-action@v3
         with:
-          python-version: '3.11'
-
-      - name: Install PlatformIO
-        run: pip install platformio
-
-      - name: Build firmware for M5Stick S3
-        run: platformio run -e esp32-s3-devkitm-1  # ← Changed to your new environment
-
-      - name: Check build output
-        run: find .pio -name "*.bin" -type f
-
-      - name: Upload firmware artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: firmware
-          path: .pio/build/esp32-s3-devkitm-1/  # ← Match your environment + board folder
+          project-dir: .
+          environment: m5stick-s3
+          options: -v
