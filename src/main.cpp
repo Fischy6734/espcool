@@ -1,16 +1,13 @@
-#include <Arduino.h>   // <-- brings in all Arduino core symbols
+#include <Arduino.h> // <-- Required for all Arduino core functions
 
 void setup() {
-    // Configure the built‑in LED pin as an output
-    pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT); // Configure the LED pin as an output
 }
 
 void loop() {
-    // Turn the LED on
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(500);   // wait 500 ms
+  digitalWrite(LED_BUILTIN, HIGH); // Turn the LED on
+  delay(500);                      // Wait for 0.5 seconds
 
-    // Turn the LED off
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(500);   // wait 500 ms
+  digitalWrite(LED_BUILTIN, LOW);  // Turn the LED off
+  delay(500);                      // Wait for 0.5 seconds
 }
